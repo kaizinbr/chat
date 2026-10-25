@@ -1,11 +1,6 @@
 "use client";
 
-import {
-    useEffect,
-    useMemo,
-    useRef,
-    useState,
-} from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { useNow } from "@/hooks/useNow";
 import { copyText } from "@/lib/clipboard";
 import {
@@ -41,6 +36,7 @@ import { useFirewall } from "@/store/firewall";
 import { QueueTool } from "./queue-tool";
 import { N2Tool } from "@/components/tools/n2-tool";
 import { ToolWindow } from "./tool-window";
+import Link from "next/link";
 
 type ToolId =
     | "n2"
@@ -59,7 +55,12 @@ interface WorkspaceMenuDefinition {
 }
 
 const WORKSPACE_MENUS: WorkspaceMenuDefinition[] = [
-    { id: "n2", label: "N2", className: "border border-purple-500! bg-purple-500/10! text-purple-300!" },
+    {
+        id: "n2",
+        label: "N2",
+        className:
+            "border border-purple-500! bg-purple-500/10! text-purple-300!",
+    },
     { id: "fila", label: "FILA", className: "menu-fila" },
     { id: "forponto", label: "FORPONTO", className: "menu-forponto" },
     { id: "gx", label: "GX", className: "menu-gx" },
@@ -133,9 +134,10 @@ function HistoryTool({
             }}
             open={open}
             onClose={onClose}
-            style={{                
+            style={{
                 border: "1px solid rgba(8,145,178,0.24)",
             }}
+            className="shadow-cyan-500/20!"
         >
             <div className="history-window-body">
                 <div id="total-count-large" className="history-total">
@@ -179,16 +181,17 @@ function HistoryTool({
                                                     }}
                                                 >
                                                     TMA:{" "}
-                                                    {formatTma(
-                                                        tma.averageMs,
-                                                    )}
+                                                    {formatTma(tma.averageMs)}
                                                 </span>
                                             ) : null}
                                         </div>
                                     </header>
                                     {data.logs.map((log) => (
                                         <HistoryEntry
-                                            key={log.id ?? `${day}-${log.horario}`}
+                                            key={
+                                                log.id ??
+                                                `${day}-${log.horario}`
+                                            }
                                             log={log}
                                         />
                                     ))}
@@ -204,17 +207,9 @@ function HistoryTool({
 
 // ───────────────────────────── CONFIG ─────────────────────────────
 
-function ConfigTool({
-    open,
-    onClose,
-}: {
-    open: boolean;
-    onClose: () => void;
-}) {
+function ConfigTool({ open, onClose }: { open: boolean; onClose: () => void }) {
     const muted = useFirewall((state) => state.attentionMuted);
-    const setAttentionMuted = useFirewall(
-        (state) => state.setAttentionMuted,
-    );
+    const setAttentionMuted = useFirewall((state) => state.setAttentionMuted);
     const clearHistoryData = useFirewall((state) => state.clearHistoryData);
     const clearAllCache = useFirewall((state) => state.clearAllCache);
 
@@ -279,6 +274,7 @@ function ConfigTool({
                 background: "rgba(100,116,139,0.12)",
                 borderBottom: "1px solid rgba(100,116,139,0.25)",
             }}
+            className="shadow-gray-500/20!"
             open={open}
             onClose={onClose}
             style={{
@@ -294,10 +290,7 @@ function ConfigTool({
                         >
                             Tamanho da fonte (site todo)
                         </label>
-                        <span
-                            id="font-size-value"
-                            className="settings-value"
-                        >
+                        <span id="font-size-value" className="settings-value">
                             {fontPercent}%
                         </span>
                     </div>
@@ -347,8 +340,8 @@ function ConfigTool({
                         className="settings-slider"
                     />
                     <div className="settings-hint">
-                        Aumenta ou diminui toda a interface (janelas, botões
-                        e layout geral).
+                        Aumenta ou diminui toda a interface (janelas, botões e
+                        layout geral).
                     </div>
                 </div>
 
@@ -373,14 +366,13 @@ function ConfigTool({
                         </label>
                     </div>
                     <div className="settings-hint">
-                        Quando ativado, silencia o som repetido de aviso
-                        quando um chat fica aguardando resposta por mais de 1
-                        minuto.
+                        Quando ativado, silencia o som repetido de aviso quando
+                        um chat fica aguardando resposta por mais de 1 minuto.
                     </div>
                 </div>
 
                 <div className="settings-group">
-                    <div className="settings-label">Manutenção</div>
+                    <h2 className="settings-label">Manutenção</h2>
                     <div
                         className="settings-actions"
                         style={{
@@ -404,6 +396,40 @@ function ConfigTool({
                             ⚠️ Limpar todo cache
                         </button>
                     </div>
+                </div>
+
+                <div className="settings-group">
+                    <h2 className="settings-label">Informações</h2>
+                    <p className="text-sm">
+                        Essa ferramenta é baseada no{" "}
+                        <Link
+                            className="text-cyan-500 hover:text-cyan-700 underline"
+                            href="https://chat.fireuau.online/"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                        >
+                            Firewall da Amizade
+                        </Link>{" "}
+                        feito pelo colega{" "}
+                        <strong>Pedro Elvis Soares Nóbrega</strong>. Mesmo tendo
+                        recriado a ferramenta em React, a extensão e Ids para
+                        gestão do rocket foram mantidos do projeto dele.
+                    </p>
+                    {/* <p className="text-sm">
+                        Você pode acessar{" "}
+                        <Link
+                            className="text-cyan-500 hover:text-cyan-700 underline"
+                            href="https://chat.fireuau.online/"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                        >
+                            Firewall da Amizade
+                        </Link>{" "}
+                        feito pelo colega{" "}
+                        <strong>Pedro Elvis Soares Nóbrega</strong>. Mesmo tendo
+                        recriado a ferramenta em React, a extensão e Ids para
+                        gestão do rocket foram mantidos do projeto dele.
+                    </p> */}
                 </div>
 
                 <div className="settings-actions">
@@ -446,9 +472,7 @@ function readNotepadCache(): NotepadCache {
     } | null>(STORAGE_KEYS.notepad, null);
     return {
         content:
-            parsed && typeof parsed.content === "string"
-                ? parsed.content
-                : "",
+            parsed && typeof parsed.content === "string" ? parsed.content : "",
         updatedAt:
             parsed && typeof parsed.updatedAt === "number"
                 ? parsed.updatedAt
@@ -462,13 +486,7 @@ function saveNotepadCache(content: string) {
     return payload;
 }
 
-function NotesTool({
-    open,
-    onClose,
-}: {
-    open: boolean;
-    onClose: () => void;
-}) {
+function NotesTool({ open, onClose }: { open: boolean; onClose: () => void }) {
     const [mode, setMode] = useState<"text" | "terminal">("text");
     const [text, setText] = useState("");
     const [lines, setLines] = useState<TerminalLine[]>([]);
@@ -567,10 +585,7 @@ function NotesTool({
         if (cmd === "clear") {
             setText("");
             saveNotepadCache("");
-            appendLine(
-                "anotacoes limpas e cache atualizado.",
-                "#f59e0b",
-            );
+            appendLine("anotacoes limpas e cache atualizado.", "#f59e0b");
             return;
         }
         if (cmd === "cls") {
@@ -640,6 +655,7 @@ function NotesTool({
             style={{
                 border: "1px solid rgba(245,158,11,0.24)",
             }}
+            className="shadow-amber-500/20!"
         >
             <div className="notepad-body">
                 <textarea
@@ -682,9 +698,7 @@ function NotesTool({
                             autoComplete="off"
                             placeholder="help"
                             value={command}
-                            onChange={(event) =>
-                                setCommand(event.target.value)
-                            }
+                            onChange={(event) => setCommand(event.target.value)}
                             onKeyDown={(event) => {
                                 if (event.key !== "Enter") return;
                                 runCommand(command);
@@ -748,13 +762,7 @@ function totalWorked(points: Ponto[], nowTs: number) {
     return total;
 }
 
-function PontoList({
-    points,
-    empty,
-}: {
-    points: Ponto[];
-    empty: string;
-}) {
+function PontoList({ points, empty }: { points: Ponto[]; empty: string }) {
     if (!points.length) {
         return <div className="tool-empty">{empty}</div>;
     }
@@ -764,9 +772,7 @@ function PontoList({
                 <div key={`${point.timestamp}-${point.tipo}`}>
                     <b
                         className={
-                            point.tipo === "ENTRADA"
-                                ? "ponto-in"
-                                : "ponto-out"
+                            point.tipo === "ENTRADA" ? "ponto-in" : "ponto-out"
                         }
                     >
                         {point.tipo}
@@ -840,9 +846,7 @@ function ForpontoTool({
         };
         setData(next);
         writeJSON(STORAGE_KEYS.forponto, next);
-        void fwAlert(
-            `Ponto registrado: ${tipo} às ${ponto.horario}`,
-        );
+        void fwAlert(`Ponto registrado: ${tipo} às ${ponto.horario}`);
     }
 
     const weekdays = [
@@ -869,6 +873,7 @@ function ForpontoTool({
             style={{
                 border: "1px solid rgba(239,68,68,0.2)",
             }}
+            className="shadow-red-500/20!"
             headerActions={
                 <>
                     <button
@@ -888,8 +893,7 @@ function ForpontoTool({
                         id="tab-historico"
                         onClick={() => setTab("historico")}
                         style={{
-                            color:
-                                tab === "historico" ? "#fff" : "#6b7280",
+                            color: tab === "historico" ? "#fff" : "#6b7280",
                         }}
                     >
                         [Histórico]
@@ -916,9 +920,7 @@ function ForpontoTool({
                     <div id="ponto-status" className="forponto-status">
                         <span>Status Atual</span>
                         <b id="ponto-status-text">
-                            {working
-                                ? "EM EXPEDIENTE"
-                                : "FORA DO EXPEDIENTE"}
+                            {working ? "EM EXPEDIENTE" : "FORA DO EXPEDIENTE"}
                         </b>
                         <small id="ponto-tempo-trabalhado">
                             Tempo trabalhado hoje:{" "}
@@ -956,22 +958,14 @@ function ForpontoTool({
                                 .map(([day, points]) => {
                                     const total = totalWorked(points, nowTs);
                                     return (
-                                        <div
-                                            className="ponto-day"
-                                            key={day}
-                                        >
+                                        <div className="ponto-day" key={day}>
                                             <b>
                                                 {new Date(
                                                     `${day}T00:00:00`,
-                                                ).toLocaleDateString(
-                                                    "pt-BR",
-                                                )}
+                                                ).toLocaleDateString("pt-BR")}
                                             </b>
                                             <span>
-                                                {Math.floor(
-                                                    total / 3_600_000,
-                                                )}
-                                                h{" "}
+                                                {Math.floor(total / 3_600_000)}h{" "}
                                                 {Math.floor(total / 60_000) %
                                                     60}
                                                 m trabalhadas
@@ -993,13 +987,7 @@ function ForpontoTool({
 
 // ───────────────────────────── GX / FLUXOS ─────────────────────────────
 
-function GXTool({
-    open,
-    onClose,
-}: {
-    open: boolean;
-    onClose: () => void;
-}) {
+function GXTool({ open, onClose }: { open: boolean; onClose: () => void }) {
     const [fluxos, setFluxos] = useState<Fluxo[]>([]);
     const [editing, setEditing] = useState(false);
     const [draft, setDraft] = useState<Fluxo[]>([]);
@@ -1036,11 +1024,7 @@ function GXTool({
         setEditing(true);
     }
 
-    function updateDraft(
-        index: number,
-        field: keyof Fluxo,
-        value: string,
-    ) {
+    function updateDraft(index: number, field: keyof Fluxo, value: string) {
         setDraft((current) =>
             current.map((item, itemIndex) =>
                 itemIndex === index ? { ...item, [field]: value } : item,
@@ -1109,6 +1093,7 @@ function GXTool({
             style={{
                 border: "1px solid rgba(239,68,68,0.2)",
             }}
+            className="shadow-red-500/20!"
             headerActions={
                 editing ? null : (
                     <button
@@ -1238,9 +1223,7 @@ function GXTool({
                                             ? "rgba(239,68,68,0.2)"
                                             : undefined,
                                 }}
-                                onClick={() =>
-                                    void copyFluxo(index, fluxo)
-                                }
+                                onClick={() => void copyFluxo(index, fluxo)}
                             >
                                 <div className="fluxo-title">
                                     {fluxo.titulo}
@@ -1267,9 +1250,7 @@ function PendingMessagesTool({
     onClose: () => void;
 }) {
     const pendingMessages = useFirewall((state) => state.pendingMessages);
-    const setPendingMessages = useFirewall(
-        (state) => state.setPendingMessages,
-    );
+    const setPendingMessages = useFirewall((state) => state.setPendingMessages);
     const [draft, setDraft] = useState<string[]>([]);
     const [newMessage, setNewMessage] = useState("");
     const wasOpen = useRef(false);
@@ -1283,9 +1264,7 @@ function PendingMessagesTool({
     }, [open, pendingMessages]);
 
     function save() {
-        const updated = draft
-            .map((message) => message.trim())
-            .filter(Boolean);
+        const updated = draft.map((message) => message.trim()).filter(Boolean);
         const extra = newMessage.trim();
         if (extra) updated.push(extra);
         setPendingMessages(updated);
@@ -1296,7 +1275,7 @@ function PendingMessagesTool({
     return (
         <ToolWindow
             id="pending-messages-editor"
-            title="EDITOR DE MENSAGENS PENDENTES"
+            title=">_ EDITOR_DE_MENSAGENS_PENDENTES.EXE"
             color="#22c55e"
             defaults={TOOL_DEFAULTS.messages}
             minSize={{ width: 400, height: 340 }}
@@ -1304,6 +1283,7 @@ function PendingMessagesTool({
                 background: "rgba(34,197,94,0.1)",
                 borderBottom: "1px solid rgba(34,197,94,0.2)",
             }}
+            className="shadow-green-500/20!"
             style={{
                 border: "1px solid rgba(34,197,94,0.2)",
             }}
@@ -1424,19 +1404,13 @@ export function WorkspaceTools() {
             />
             <GXTool open={open.gx} onClose={() => close("gx")} />
             <QueueTool open={open.fila} onClose={() => close("fila")} />
-            <ConfigTool
-                open={open.config}
-                onClose={() => close("config")}
-            />
+            <ConfigTool open={open.config} onClose={() => close("config")} />
             <PendingMessagesTool
                 open={open.messages}
                 onClose={() => close("messages")}
             />
             <NotesTool open={open.notes} onClose={() => close("notes")} />
-            <HistoryTool
-                open={open.history}
-                onClose={() => close("history")}
-            />
+            <HistoryTool open={open.history} onClose={() => close("history")} />
         </>
     );
 }

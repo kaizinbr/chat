@@ -19,6 +19,7 @@ interface ToolWindowProps {
     minSize?: { width: number; height: number };
     headerStyle?: CSSProperties;
     style?: CSSProperties;
+    className?: string;
     headerActions?: ReactNode;
     open: boolean;
     onClose: () => void;
@@ -37,6 +38,7 @@ export function ToolWindow({
     minSize = { width: 300, height: 280 },
     headerStyle,
     style,
+    className,
     headerActions,
     open,
     onClose,
@@ -64,7 +66,7 @@ export function ToolWindow({
         <div
             ref={windowRef}
             id={id}
-            className="notepad-window tool-window"
+            className={`notepad-window tool-window shadow-box! ${className || ""}`}
             style={{
                 display: open ? "flex" : "none",
                 top: layout.top,

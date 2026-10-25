@@ -275,6 +275,7 @@ export function QueueTool({
                     ↺ atualizar
                 </button>
             }
+            className="shadow-green-500/20!"
             open={open}
             onClose={onClose}
             style={{                
@@ -366,7 +367,7 @@ export function QueueTool({
 
                 {status === "ready" && dashboard ? (
                     <>
-                        <div className="fr-userbar">
+                        {/* <div className="fr-userbar">
                             <div
                                 className="fr-avatar"
                                 style={{
@@ -399,7 +400,7 @@ export function QueueTool({
                             >
                                 sair
                             </button>
-                        </div>
+                        </div> */}
 
                         <div className="gap-4 grid grid-cols-2">
                             <div className="fr-stat fr-stat-queue">

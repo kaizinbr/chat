@@ -10,6 +10,7 @@ import {
 import { DEFAULT_AVATAR_URL } from "@/lib/config";
 import { fwAlert, fwConfirm } from "@/lib/modal";
 import { useFirewall } from "@/store/firewall";
+import Image from "next/image";
 
 const OMNI_COOLDOWN_MS = 3_000;
 
@@ -20,7 +21,7 @@ function Ball({ id }: { id: number }) {
     return (
         <div
             id={`ball_${id}`}
-            className="ball shadow-blue-500/20 relative"
+            className="ball shadow-blue-500/20 backdrop-blur-sm relative"
             onClick={() => setWindowOpen(id, true)}
         >
             {String(id).padStart(2, "0")}
@@ -101,7 +102,7 @@ export function SlotRail() {
     }
 
     return (
-        <div className="fixed left-6 top-1/2 -translate-y-1/2 flex flex-col z-[100]">
+        <div className="fixed left-6 top-1/2 -translate-y-1/2 flex flex-col z-100">
             <div
                 id="omni-toggle"
                 className={`omni-toggle cursor-pointer ${omniOpen ? "open" : "closed"}`}
@@ -118,15 +119,18 @@ export function SlotRail() {
 
             <div
                 id="agent-card"
-                className="agent-card cursor-pointer"
+                className="agent-card cursor-pointer transition-all duration-200"
                 onClick={() => setRocketOpen(true)}
             >
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img
+                <Image
                     id="agent-avatar"
                     src={avatarUrl ?? DEFAULT_AVATAR_URL}
                     alt="avatar"
                     className="agent-avatar"
+                    width={38}
+                    height={38}
+                    unoptimized
+                    loading="eager"
                 />
                 <span
                     id="agent-status-dot"

@@ -117,7 +117,7 @@ export function N2Tool({
     return (
         <ToolWindow
             id="n2-window"
-            title=">_ MÁSCARA N2.EXE"
+            title=">_ MÁSCARA_N2.EXE"
             color="#c27aff"
             defaults={TOOL_DEFAULTS.fluxos}
             minSize={{ width: 380, height: 420 }}
@@ -126,6 +126,7 @@ export function N2Tool({
                 borderBottom: "1px solid rgba(173,70,255,0.3)",
             }}
             style={{ border: "1px solid rgba(194,122,255,0.3)" }}
+            className={"shadow-purple-500/20!"}
             open={open}
             onClose={onClose}
         >

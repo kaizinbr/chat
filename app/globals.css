@@ -16,6 +16,7 @@
     
 
     --shadow-link: 0 -12px 16px #0f172a73;
+    --shadow-box: 0 0 20px;
 
     --font-family-mono: "Fira Code", monospace;
     --font-display: "Orbitron", monospace;
