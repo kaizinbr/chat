@@ -277,6 +277,9 @@ export function QueueTool({
             }
             open={open}
             onClose={onClose}
+            style={{                
+                border: "1px solid rgba(45,224,165,0.22)",
+            }}
         >
             <div className="fr-body">
                 {status === "loading" && !dashboard ? (

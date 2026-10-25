@@ -39,9 +39,11 @@ import {
 } from "@/lib/storage";
 import { useFirewall } from "@/store/firewall";
 import { QueueTool } from "./queue-tool";
+import { N2Tool } from "@/components/tools/n2-tool";
 import { ToolWindow } from "./tool-window";
 
 type ToolId =
+    | "n2"
     | "fila"
     | "forponto"
     | "gx"
@@ -57,9 +59,10 @@ interface WorkspaceMenuDefinition {
 }
 
 const WORKSPACE_MENUS: WorkspaceMenuDefinition[] = [
+    { id: "n2", label: "N2", className: "border border-purple-500! bg-purple-500/10! text-purple-300!" },
+    { id: "fila", label: "FILA", className: "menu-fila" },
     { id: "forponto", label: "FORPONTO", className: "menu-forponto" },
     { id: "gx", label: "GX", className: "menu-gx" },
-    { id: "fila", label: "FILA", className: "menu-fila" },
     { id: "config", label: "⚙ CONFIG", className: "menu-config" },
     { id: "messages", label: "MENSAGENS", className: "menu-messages" },
     { id: "notes", label: "NOTAS", className: "menu-notes" },
@@ -130,6 +133,9 @@ function HistoryTool({
             }}
             open={open}
             onClose={onClose}
+            style={{                
+                border: "1px solid rgba(8,145,178,0.24)",
+            }}
         >
             <div className="history-window-body">
                 <div id="total-count-large" className="history-total">
@@ -275,6 +281,9 @@ function ConfigTool({
             }}
             open={open}
             onClose={onClose}
+            style={{
+                border: "1px solid rgba(100,116,139,0.25)",
+            }}
         >
             <div className="settings-body">
                 <div className="settings-group">
@@ -628,6 +637,9 @@ function NotesTool({
             }
             open={open}
             onClose={onClose}
+            style={{
+                border: "1px solid rgba(245,158,11,0.24)",
+            }}
         >
             <div className="notepad-body">
                 <textarea
@@ -853,6 +865,9 @@ function ForpontoTool({
             headerStyle={{
                 background: "rgba(239,68,68,0.1)",
                 borderBottom: "1px solid rgba(239,68,68,0.2)",
+            }}
+            style={{
+                border: "1px solid rgba(239,68,68,0.2)",
             }}
             headerActions={
                 <>
@@ -1091,6 +1106,9 @@ function GXTool({
                 background: "rgba(239,68,68,0.1)",
                 borderBottom: "1px solid rgba(239,68,68,0.2)",
             }}
+            style={{
+                border: "1px solid rgba(239,68,68,0.2)",
+            }}
             headerActions={
                 editing ? null : (
                     <button
@@ -1286,6 +1304,9 @@ function PendingMessagesTool({
                 background: "rgba(34,197,94,0.1)",
                 borderBottom: "1px solid rgba(34,197,94,0.2)",
             }}
+            style={{
+                border: "1px solid rgba(34,197,94,0.2)",
+            }}
             open={open}
             onClose={onClose}
         >
@@ -1366,6 +1387,7 @@ const INITIAL_OPEN: Record<ToolId, boolean> = {
     messages: false,
     notes: false,
     history: false,
+    n2: false,
 };
 
 /**
@@ -1394,6 +1416,7 @@ export function WorkspaceTools() {
                     </button>
                 ))}
             </div>
+            <N2Tool open={open.n2} onClose={() => close("n2")} />
 
             <ForpontoTool
                 open={open.forponto}

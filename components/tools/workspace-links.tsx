@@ -19,7 +19,7 @@ export function WorkspaceLinks() {
                 <Link
                     key={link.label}
                     href={link.href}
-                    className="text-link-main border border-link-border border-b-0 bg-link-bg px-4 py-2 rounded-t-lg text-sm font-mono shadow-link"
+                    className="text-link-main border border-link-border border-b-0 bg-link-bg px-4 py-2 rounded-t-xl text-sm font-mono shadow-link"
                     target="_blank"
                 >
                     {link.label}

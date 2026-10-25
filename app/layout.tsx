@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 
 export const metadata: Metadata = {
-    title: "Firewall da Amizade",
+    title: "Firewall Workspace",
     description: "Painel de atendimento multi-slot sobre o Rocket.Chat",
 };
 

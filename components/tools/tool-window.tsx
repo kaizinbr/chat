@@ -18,6 +18,7 @@ interface ToolWindowProps {
     defaults: ToolDefaults;
     minSize?: { width: number; height: number };
     headerStyle?: CSSProperties;
+    style?: CSSProperties;
     headerActions?: ReactNode;
     open: boolean;
     onClose: () => void;
@@ -35,6 +36,7 @@ export function ToolWindow({
     defaults,
     minSize = { width: 300, height: 280 },
     headerStyle,
+    style,
     headerActions,
     open,
     onClose,
@@ -71,6 +73,7 @@ export function ToolWindow({
                 height: layout.height,
                 zIndex,
                 borderTopColor: color,
+                ...style,
             }}
             onMouseDown={bringToFront}
         >
