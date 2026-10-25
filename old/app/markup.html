@@ -1,0 +1,201 @@
+<audio id="audio-notification" preload="auto">
+    <source src="/som/notificacao.mp3" type="audio/mpeg">
+    <source src="/som/notificacao.ogg" type="audio/ogg">
+</audio>
+<audio id="audio-booting" preload="auto">
+    <source src="/som/boot.mp3" type="audio/mpeg">
+    <source src="/som/boot.ogg" type="audio/ogg">
+</audio>
+<audio id="audio-attention" preload="auto">
+    <source src="/som/nott.mp3" type="audio/mpeg">
+</audio>
+
+<div id="boot-screen" style="position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: #0a0e1a; z-index: 99999; display: flex; flex-direction: column; align-items: center; justify-content: center; font-family: 'Fira Code', monospace; color: #3b82f6;">
+    <div style="max-width: 650px; width: 90%; text-align: center;">
+        <div style="font-size: 2rem; font-weight: bold; letter-spacing: 8px; text-shadow: 0 0 20px rgba(59, 130, 246, 0.6); margin-bottom: 12px; color: #60a5fa;">PAINEL DE ATENDIMENTO</div>
+        <div style="font-size: 0.7rem; letter-spacing: 4px; color: #475569; margin-bottom: 50px;">ROCKET.CHAT</div>
+        <div style="border: 1px solid rgba(59, 130, 246, 0.25); padding: 30px; background: rgba(15, 20, 35, 0.9); box-shadow: 0 0 30px rgba(59, 130, 246, 0.08); margin-bottom: 40px; text-align: left;">
+            <div id="boot-text" style="font-size: 0.8rem; white-space: pre-line; min-height: 120px; color: #94a3b8; line-height: 2;"></div>
+        </div>
+        <button id="boot-button" onclick="startSystem()" style="display: none; background: transparent; color: #3b82f6; border: 1px solid rgba(59, 130, 246, 0.5); padding: 14px 60px; font-size: 0.85rem; font-family: 'Fira Code', monospace; cursor: pointer; letter-spacing: 3px; transition: all 0.3s; box-shadow: 0 0 20px rgba(59, 130, 246, 0.3);" onmouseover="this.style.background='#3b82f6'; this.style.color='#0a0e1a'; this.style.boxShadow='0 0 30px rgba(59, 130, 246, 0.6)';" onmouseout="this.style.background='transparent'; this.style.color='#3b82f6'; this.style.boxShadow='0 0 20px rgba(59, 130, 246, 0.3)';">INICIAR SISTEMA</button>
+    </div>
+</div>
+
+<div id="app-shell">
+
+    <div class="fixed top-0 right-4 z-[100] flex gap-2" style="transform: translateY(-4px);">
+        <button onclick="openForPonto()" style="font-family:'Fira Code',monospace; padding:8px 18px; font-size:0.72rem; font-weight:700; background:#3b0a0a; color:#ff4444; border:1.5px solid #ef4444; border-top:none; border-radius:0 0 10px 10px; cursor:pointer; letter-spacing:0.05em; box-shadow:0 4px 16px rgba(239,68,68,0.3);">FORPONTO</button>
+        <button onclick="openGuiaFluxos()" style="font-family:'Fira Code',monospace; padding:8px 18px; font-size:0.72rem; font-weight:700; background:#3b0a0a; border:1.5px solid #ef4444; border-top:none; border-radius:0 0 10px 10px; cursor:pointer; letter-spacing:0.05em; box-shadow:0 4px 16px rgba(239,68,68,0.3);"><span style="color:#f8fafc;">G</span><span style="color:#ff4444;">X</span></button>
+        <button onclick="openSettingsPanel()" title="Configurações" style="font-family:'Fira Code',monospace; padding:8px 16px; font-size:0.72rem; font-weight:700; background:#0f172a; color:#cbd5e1; border:1.5px solid #475569; border-top:none; border-radius:0 0 10px 10px; cursor:pointer; letter-spacing:0.05em; box-shadow:0 4px 16px rgba(15,23,42,0.45);">⚙ CONFIG</button>
+        <button onclick="openPendingMessagesEditor()" style="font-family:'Fira Code',monospace; padding:8px 18px; font-size:0.72rem; font-weight:700; background:#0a1a3b; color:#60a5fa; border:1.5px solid #2563eb; border-top:none; border-radius:0 0 10px 10px; cursor:pointer; letter-spacing:0.05em; box-shadow:0 4px 16px rgba(37,99,235,0.3);">MENSAGENS</button>
+        <button onclick="openNotepad()" style="font-family:'Fira Code',monospace; padding:8px 18px; font-size:0.72rem; font-weight:700; background:#2d1500; color:#fbbf24; border:1.5px solid #d97706; border-top:none; border-radius:0 0 10px 10px; cursor:pointer; letter-spacing:0.05em; box-shadow:0 4px 16px rgba(217,119,6,0.3);">NOTAS</button>
+        <button id="btn-hist" onclick="toggleLog(true)" style="font-family:'Fira Code',monospace; padding:8px 18px; font-size:0.72rem; font-weight:700; background:#001a2d; color:#22d3ee; border:1.5px solid #0891b2; border-top:none; border-radius:0 0 10px 10px; cursor:pointer; letter-spacing:0.05em; box-shadow:0 4px 16px rgba(8,145,178,0.3);">HISTÓRICO</button>
+    </div>
+
+    <div id="notepad" class="notepad-window" style="top: 20%; left: 30%;">
+        <div class="notepad-header">
+            <span style="color: var(--neon-amber)">&gt;_ NOTES_CACHE.EXE</span>
+            <div style="display:flex; gap:8px; align-items:center;">
+                <button onclick="setNotepadMode('text')" class="slot-action-btn" style="color:#f59e0b;">texto</button>
+                <button onclick="setNotepadMode('terminal')" class="slot-action-btn" style="color:#60a5fa;">terminal</button>
+                <button onclick="clearNotepadCache()" class="slot-action-btn" style="color:#ef4444;">limpar cache</button>
+                <button onclick="closeNotepad()" class="hover:text-red-500">✕</button>
+            </div>
+        </div>
+        <div class="notepad-body">
+            <textarea id="notepad-content" placeholder="Digite suas anotações... (salva automaticamente no cache)"></textarea>
+            <div id="notepad-terminal" class="notepad-terminal" style="display:none;">
+                <div id="notepad-terminal-output" class="notepad-terminal-output"></div>
+                <div class="notepad-terminal-input-row">
+                    <span>notes@cache:~$</span>
+                    <input id="notepad-terminal-input" class="notepad-terminal-input" type="text" autocomplete="off" placeholder="help" />
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="guia-fluxos" class="notepad-window" style="top: 10%; left: 25%; width: 600px; height: 550px;">
+        <div class="notepad-header" style="background: rgba(239, 68, 68, 0.1); border-bottom: 1px solid rgba(239, 68, 68, 0.2);">
+            <span style="color: #ef4444">&gt;_ GUIA_DE_FLUXOS.EXE</span>
+            <div style="display: flex; gap: 8px; align-items: center;">
+                <button onclick="event.stopPropagation();openFluxosEditor();" style="display:none;background:none;border:none;color:#64748b;font-size:0.7rem;cursor:pointer;font-family:'Fira Code',monospace;padding:0;" onmouseover="this.style.color='#94a3b8'" onmouseout="this.style.color='#64748b'">editar</button>
+                <button onclick="closeGuiaFluxos()" class="hover:text-red-500">✕</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="settings-panel" class="notepad-window" style="top: 12%; left: 30%; width: 520px; height: 430px; border-top: 4px solid #64748b; border-color: rgba(100, 116, 139, 0.45);">
+        <div class="notepad-header" style="background: rgba(100, 116, 139, 0.12); border-bottom: 1px solid rgba(100, 116, 139, 0.25);">
+            <span style="color: #cbd5e1">&gt;_ CONFIGURAÇÕES.EXE</span>
+            <button onclick="closeSettingsPanel()" class="hover:text-red-500">✕</button>
+        </div>
+        <div class="settings-body">
+            <div class="settings-group">
+                <div class="settings-row">
+                    <label for="font-size-slider" class="settings-label">Tamanho da fonte (site todo)</label>
+                    <span id="font-size-value" class="settings-value">100%</span>
+                </div>
+                <input id="font-size-slider" type="range" min="85" max="220" step="5" value="100" oninput="updateFontScaleFromInput(this.value)" class="settings-slider" />
+                <div class="settings-hint">Ajusta textos gerais da interface. Preferência salva automaticamente.</div>
+            </div>
+            <div class="settings-group">
+                <div class="settings-row">
+                    <label for="interface-zoom-slider" class="settings-label">Zoom da interface inteira</label>
+                    <span id="interface-zoom-value" class="settings-value">82%</span>
+                </div>
+                <input id="interface-zoom-slider" type="range" min="70" max="150" step="2" value="82" oninput="updateAppScaleFromInput(this.value)" class="settings-slider" />
+                <div class="settings-hint">Aumenta ou diminui toda a interface (janelas, botões e layout geral).</div>
+            </div>
+            <div class="settings-group">
+                <div class="settings-row">
+                    <label for="attention-sound-mute-toggle" class="settings-label">Mutar alerta de conversa inativa (+1 min)</label>
+                    <label class="settings-switch">
+                        <input id="attention-sound-mute-toggle" type="checkbox" onchange="toggleAttentionSoundMuted(this.checked)" />
+                        <span class="settings-switch-slider"></span>
+                    </label>
+                </div>
+                <div class="settings-hint">Quando ativado, silencia o som repetido de aviso quando um chat fica aguardando resposta por mais de 1 minuto.</div>
+            </div>
+            <div class="settings-group">
+                <div class="settings-label">Manutenção</div>
+                <div class="settings-actions" style="justify-content:flex-start; gap:8px; flex-wrap:wrap;">
+                    <button onclick="clearHistory()" class="settings-btn settings-btn-danger">🗑️ Limpar histórico</button>
+                    <button onclick="limparTodoCache()" class="settings-btn settings-btn-warning">⚠️ Limpar todo cache</button>
+                </div>
+            </div>
+            <div class="settings-actions">
+                <button onclick="resetFontScaleSetting()" class="settings-btn settings-btn-secondary">Padrão</button>
+                <button onclick="closeSettingsPanel()" class="settings-btn settings-btn-primary">Fechar</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="rocket-panel" class="notepad-window" style="top: 10%; left: 10%; width: 520px; height: 600px; z-index: 50; display: flex; visibility: hidden; opacity: 0; pointer-events: none; border-top: 4px solid var(--neon-blue); transition: opacity 0.2s ease, transform 0.2s ease; transform: translateY(-8px);">
+        <div class="chat-header">
+            <span style="color: var(--neon-blue)">[ROCKET_CONTROL]</span>
+            <button onclick="closeRocketPanel()" class="hover:text-red-500 font-bold">✕</button>
+        </div>
+        <iframe id="frame_rocket" name="frame_rocket" src="about:blank" style="flex-grow:1;border:none;background:#fff;visibility:visible;" allow="fullscreen; clipboard-read; clipboard-write" muted></iframe>
+    </div>
+
+    <div id="forponto-window" class="notepad-window" style="top: 12%; left: 35%; width: 500px; height: 580px; display: none; border-top: 4px solid #ef4444;">
+        <div class="notepad-header" style="background: rgba(239, 68, 68, 0.1); border-bottom: 1px solid rgba(239, 68, 68, 0.2);">
+            <div class="flex items-center gap-3">
+                <span style="color: #ef4444">&gt;_ FORPONTO.EXE</span>
+                <button onclick="togglePontoTab('registro')" class="text-[0.6rem] text-gray-500 hover:text-white uppercase" id="tab-registro">[Registro]</button>
+                <button onclick="togglePontoTab('historico')" class="text-[0.6rem] text-gray-500 hover:text-white uppercase" id="tab-historico">[Histórico]</button>
+            </div>
+            <button onclick="closeForPonto()" class="hover:text-red-500 font-bold">✕</button>
+        </div>
+
+        <div id="ponto-registro" style="padding: 25px; overflow-y: auto; height: calc(100% - 40px); background: #050a15;">
+            <div style="text-align: center; margin-bottom: 25px;">
+                <div id="ponto-clock" style="font-size: 2.5rem; color: #ef4444; font-family: 'Orbitron', monospace; font-weight: bold; margin-bottom: 5px;">00:00:00</div>
+                <div id="ponto-date" style="font-size: 0.8rem; color: #94a3b8; text-transform: uppercase; letter-spacing: 2px;"></div>
+            </div>
+
+            <div id="ponto-status" style="background: rgba(239, 68, 68, 0.1); border: 1px solid rgba(239, 68, 68, 0.3); border-radius: 6px; padding: 20px; margin-bottom: 25px; text-align: center;">
+                <div style="color: #ef4444; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 8px;">Status Atual</div>
+                <div id="ponto-status-text" style="color: #e2e8f0; font-size: 1rem; font-weight: bold;">FORA DO EXPEDIENTE</div>
+                <div id="ponto-tempo-trabalhado" style="color: #94a3b8; font-size: 0.7rem; margin-top: 8px;">Tempo trabalhado hoje: 0h 0m</div>
+            </div>
+
+            <button id="btn-bater-ponto" onclick="baterPonto()" style="width: 100%; padding: 18px; background: rgba(239, 68, 68, 0.2); color: #ef4444; border: 2px solid rgba(239, 68, 68, 0.5); border-radius: 6px; font-size: 0.85rem; font-weight: bold; text-transform: uppercase; letter-spacing: 2px; cursor: pointer; transition: all 0.3s; font-family: 'Orbitron', monospace;" onmouseover="this.style.background='#ef4444'; this.style.color='#000';" onmouseout="this.style.background='rgba(239, 68, 68, 0.2)'; this.style.color='#ef4444';">BATER PONTO</button>
+
+            <div id="ponto-today-list" style="margin-top: 25px;">
+                <div style="color: #3b82f6; font-size: 0.65rem; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 12px; border-bottom: 1px solid rgba(59, 130, 246, 0.2); padding-bottom: 8px;">Pontos de Hoje</div>
+                <div id="ponto-today-items" style="max-height: 160px; overflow-y: auto;"></div>
+            </div>
+        </div>
+
+        <div id="ponto-historico" style="padding: 25px; overflow-y: auto; height: calc(100% - 40px); background: #050a15; display: none;">
+            <div style="color: #3b82f6; font-size: 0.7rem; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 15px;">Histórico de Pontos</div>
+            <div id="ponto-historico-items"></div>
+        </div>
+    </div>
+
+    <div id="log-window" class="notepad-window" style="top: 9%; left: 16%; width: 720px; height: 620px; border-top: 4px solid #0891b2; border-color: rgba(8,145,178,0.45);">
+        <div class="notepad-header" style="background: rgba(8,145,178,0.12); border-bottom: 1px solid rgba(8,145,178,0.24);">
+            <span style="color:#22d3ee">&gt;_ ATENDIMENTOS_FINALIZADOS.LOG</span>
+            <button onclick="toggleLog(false)" class="hover:text-red-500">✕</button>
+        </div>
+        <div class="history-window-body">
+            <div id="total-count-large" class="text-4xl font-bold text-white mb-6 border-b border-white/10 pb-4">0 <span class="text-xs text-blue-500 tracking-widest">SESSÕES</span></div>
+            <div id="log-content" class="space-y-4 overflow-y-auto flex-grow pr-2" style="scrollbar-width:none;-ms-overflow-style:none;"></div>
+        </div>
+    </div>
+
+    <div id="fw-modal-overlay" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.85); z-index:9999; align-items:center; justify-content:center; backdrop-filter:blur(6px);">
+        <div id="fw-modal" style="background:#0a0e1a; border:2px solid rgba(59,130,246,0.5); border-top:3px solid #3b82f6; border-radius:6px; padding:35px 45px; min-width:500px; max-width:600px; box-shadow:0 0 50px rgba(59,130,246,0.4), inset 0 0 20px rgba(59,130,246,0.05); font-family:'Fira Code',monospace;">
+            <div style="color:#3b82f6; font-size:0.65rem; text-transform:uppercase; letter-spacing:3px; margin-bottom:20px; border-bottom:1px solid rgba(59,130,246,0.2); padding-bottom:10px;">root@painel:~$</div>
+            <div id="fw-modal-msg" style="color:#94a3b8; font-size:0.75rem; margin-bottom:30px; line-height:1.8; font-family:'Fira Code',monospace;"></div>
+            <div id="fw-modal-buttons" style="display:flex; gap:15px; justify-content:center; flex-wrap:wrap;"></div>
+        </div>
+    </div>
+
+    <div class="fixed left-6 top-1/2 -translate-y-1/2 flex flex-col z-[100]">
+        <div id="omni-toggle" class="omni-toggle closed" onclick="toggleOmnichannel()" title="Ativar/Desativar recebimento de chats">
+            <span id="omni-icon">⊘</span>
+            <span id="omni-label">OFF</span>
+        </div>
+        <div id="agent-card" class="agent-card" onclick="openRocketPanel()">
+            <img id="agent-avatar" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" alt="avatar" class="agent-avatar">
+            <span id="agent-status-dot" class="agent-status-dot offline"></span>
+        </div>
+        <div id="ball_1" onclick="openChat('win1')" class="ball shadow-blue-500/20 relative">
+            01
+            <span class="ball-badge" style="display:none"></span>
+            <span class="ball-name" style="display:none"></span>
+        </div>
+        <div id="ball_2" onclick="openChat('win2')" class="ball shadow-blue-500/20 relative">
+            02
+            <span class="ball-badge" style="display:none"></span>
+            <span class="ball-name" style="display:none"></span>
+        </div>
+        <div id="ball_3" onclick="openChat('win3')" class="ball shadow-blue-500/20 relative">
+            03
+            <span class="ball-badge" style="display:none"></span>
+            <span class="ball-name" style="display:none"></span>
+        </div>
+    </div>
+</div>

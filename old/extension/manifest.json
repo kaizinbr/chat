@@ -1,0 +1,31 @@
+{
+  "manifest_version": 3,
+  "name": "Painel Rocket - Bridge",
+  "version": "3.0",
+  "description": "Captura dados do Rocket.Chat e envia para o painel de atendimento",
+  "permissions": [
+    "activeTab",
+    "declarativeNetRequest",
+    "declarativeNetRequestWithHostAccess"
+  ],
+  "host_permissions": [
+    "https://helptechho.digitalaec.com.br/*"
+  ],
+  "declarative_net_request": {
+    "rule_resources": [
+      {
+        "id": "rocket_unframe",
+        "enabled": true,
+        "path": "rules.json"
+      }
+    ]
+  },
+  "content_scripts": [
+    {
+      "matches": ["https://helptechho.digitalaec.com.br/*"],
+      "js": ["content.js"],
+      "run_at": "document_idle",
+      "all_frames": true
+    }
+  ]
+}

@@ -12,6 +12,10 @@ const eslintConfig = defineConfig([
     "out/**",
     "build/**",
     "next-env.d.ts",
+    // Código legado preservado apenas como referência da migração.
+    "old/**",
+    "original/**",
+    "extension/**",
   ]),
 ]);
 
