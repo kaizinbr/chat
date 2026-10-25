@@ -63,7 +63,7 @@ const WORKSPACE_MENUS: WorkspaceMenuDefinition[] = [
     { id: "fila", label: "FILA", className: "menu-fila" },
     { id: "forponto", label: "FORPONTO", className: "menu-forponto" },
     { id: "gx", label: "GX", className: "menu-gx" },
-    { id: "config", label: "⚙ CONFIG", className: "menu-config" },
+    { id: "config", label: "CONFIG", className: "menu-config" },
     { id: "messages", label: "MENSAGENS", className: "menu-messages" },
     { id: "notes", label: "NOTAS", className: "menu-notes" },
     { id: "history", label: "HISTÓRICO", className: "menu-history" },

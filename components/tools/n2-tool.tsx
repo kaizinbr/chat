@@ -44,14 +44,14 @@ const fields: {
         label: "Matrícula",
         placeholder: "Número da matrícula",
     },
-    { key: "site", label: "Site", placeholder: "Site do colaborador" },
+    { key: "site", label: "Site", placeholder: "JPA, MOC, CPV..." },
     { key: "protocolo", label: "Protocolo", placeholder: "Número do protocolo" },
     { key: "data", label: "Data", placeholder: "DD/MM/AAAA" },
-    { key: "hostname", label: "Hostname", placeholder: "Hostname do equipamento" },
+    { key: "hostname", label: "Hostname", placeholder: "Hostname da máquina" },
     {
         key: "patrimonio",
         label: "Patrimônio",
-        placeholder: "Número do patrimônio",
+        placeholder: "Patrimônio da máquina",
     },
     {
         key: "descricao",

@@ -507,12 +507,14 @@ export function QueueTool({
                                             </div>
                                             <div className="fr-agent-info">
                                                 <div className="fr-agent-name">
+                                                    <i
+                                                        className={`fr-dot ${frLivechatDotClass(
+                                                            agent,
+                                                        )}`}
+                                                        title="Aceita novos chats"
+                                                    />
                                                     <b>{name}</b>
-                                                    {isFrN2(agent) ? (
-                                                        <span className="fr-n2">
-                                                            N2
-                                                        </span>
-                                                    ) : null}
+                                                    
                                                     <span className="fr-dept">
                                                         {
                                                             frDepartmentIds(
@@ -545,12 +547,6 @@ export function QueueTool({
                                                             agent.status,
                                                         )}
                                                     </span>
-                                                    <i
-                                                        className={`fr-dot ${frLivechatDotClass(
-                                                            agent,
-                                                        )}`}
-                                                        title="Aceita novos chats"
-                                                    />
                                                 </div>
                                             </div>
                                             <div className="fr-agent-count">

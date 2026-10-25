@@ -202,7 +202,7 @@ export default function BootScreen() {
         >
             <div className="boot-card">
                 <h1>FIREWALL DA AMIZADE</h1>
-                <p>PEDRO ELVIS SOARES NOBREGA</p>
+                <p>ADAPTADO DE PEDRO ELVIS</p>
                 <div className="boot-text">{text}</div>
                 <button
                     type="button"
