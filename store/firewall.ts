@@ -901,6 +901,12 @@ state = {
 
 /** Garante que o painel Rocket esteja carregado quando o usuário abrir. */
 export function ensureRocketFrameOnline(forceReload = false) {
+    console.trace("[RocketFrame] ensureRocketFrameOnline", {
+        forceReload,
+        src: document.getElementById("frame_rocket")
+            ?.getAttribute("src"),
+    });
+    
     if (typeof document === "undefined") return;
     const frame = document.getElementById(
         "frame_rocket",
