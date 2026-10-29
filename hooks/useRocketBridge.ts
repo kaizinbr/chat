@@ -115,18 +115,18 @@ export function useRocketBridge() {
                     // Se um iframe de slot terminou de carregar, garante que
                     // ele abra o atendimento correto (o SPA pode perder o
                     // primeiro OPEN_CHAT_BY_NAME).
-                    if (
-                        typeof from === "number" &&
-                        current.slots[from] &&
-                        frameIsLoaded(getFrame(from))
-                    ) {
-                        const slot = current.slots[from]!;
-                        openChatInSlotFrame(
-                            from,
-                            slot.nome,
-                            slot.chatUrl,
-                        );
-                    }
+                    // if (
+                    //     typeof from === "number" &&
+                    //     current.slots[from] &&
+                    //     frameIsLoaded(getFrame(from))
+                    // ) {
+                    //     const slot = current.slots[from]!;
+                    //     openChatInSlotFrame(
+                    //         from,
+                    //         slot.nome,
+                    //         slot.chatUrl,
+                    //     );
+                    // }
                     break;
                 }
 
