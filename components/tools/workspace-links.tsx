@@ -3,6 +3,7 @@
 import Link from "next/link";
 
 const WORKSPACE_LINKS = [
+    { label: "Forponto", href: "https://t-web/ForpontoWeb/Login.aspx" },
     { label: "Rocket", href: "https://helptechho.digitalaec.com.br/home" },
     { label: "GX TI", href: "https://srv_gx_ti.grupoaec.com.br/" },
     { label: "NE1", href: "https://pmc-ne1.aec.com.br" },
